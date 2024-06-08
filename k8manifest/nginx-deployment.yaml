@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: #data of your deployment
   name: nginx-deployment
   namespace: web
-  labels: #could be any label
+  labels: #could be any label basically a key value pair 
     type: deployment 
 spec: #spec for the deployment resource
   replicas: 2 #how many pods to create
   selector: 
     matchLabels: #manage pods with nginx resources
-      app: nginx #finds label with nginx 
+      pod: nginx #finds label with nginx 
   template: # what pod we are creating, ex: nginx
     metadata:
       labels:
-        app: nginx
+        pod: nginx
     spec: #specs for containers to execute in the pod 
       containers:
       - name: nginx-container
