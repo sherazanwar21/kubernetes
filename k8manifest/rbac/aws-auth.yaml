@@ -7,8 +7,8 @@ data:
       rolearn: arn:aws:iam::767398031485:role/tfnodegrouprole
       username: system:node:{{EC2PrivateDNSName}}
   mapUsers: |
-    - userarn: arn:aws:iam::767398031485:user/k8tfuser
-      username: k8tfuser
+    - userarn: arn:aws:iam::767398031485:user/pablo
+      username: pablo
       groups: []
 kind: ConfigMap
 metadata:
