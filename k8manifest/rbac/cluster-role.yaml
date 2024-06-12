@@ -1,0 +1,9 @@
+#create a ClusterRole then create a ClusterRoleBinding and attach it
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: sheraz-cluster-role
+rules:
+- apiGroups: [""]
+  resources: ["nodes", "services"] #what resources the user can access in the cluster
+  verbs: ["get", "list", "create"] #what the user can do in the cluster

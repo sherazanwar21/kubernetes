@@ -1,0 +1,13 @@
+#to create ClusterRoleBinding you need a ClusterRole to attach
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-cluster-binding
+subjects:
+- kind: User
+  name: k8tfuser
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: sheraz-cluster-role #match ClusterRole name
+  apiGroup: rbac.authorization.k8s.io 
