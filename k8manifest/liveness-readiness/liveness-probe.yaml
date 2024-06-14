@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: #data of your deployment
+  name: nginx-deployment
+  namespace: web
+  labels: #could be any label basically a key value pair 
+    type: deployment 
+spec: #spec for the deployment resource
+  replicas: 2 #how many pods to create
+  selector: 
+    matchLabels: #manage pods with nginx resources
+      pod: nginx #finds label with nginx 
+  template: # what pod we are creating, ex: nginx
+    metadata:
+      labels:
+        pod: nginx
+    spec: #specs for containers to execute in the pod 
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports: 
+        - containerPort: 80
+        livenessProbe: 
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - curl -f http://localhost/ || exit 1 #if nginx is working, it wil
+          initialDelaySeconds: 30 #waits to run commands until 30 seconds
+          periodSeconds: 10 #runs this command every 10 seconds after intial delay
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 80
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 10
+        readinessProbe:
+          exec:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
