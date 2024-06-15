@@ -1,12 +1,12 @@
 name: terraform deploy
 
 on: #what is triggering this specific file for the workflow to run
-  push: #event
-    branches: #can have multiple branches, but they have to exist in git
-      - dev
-  pull_request: #pull request for spefic branches
-    branches:
-      - dev
+  # push: #event
+  #   branches: #can have multiple branches, but they have to exist in git
+  #     - dev
+  # pull_request: #pull request for spefic branches
+  #   branches:
+  #     - dev
   workflow_dispatch: #creates a manual button on github, to allow you to manually trigger the workflow in gui
 
 jobs: #consists of steps
