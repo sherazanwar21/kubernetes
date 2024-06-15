@@ -24,7 +24,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        working-directory: eks/modules
+        working-directory: eks-modules
         run: terraform init
 
       - name: Terraform destroy
