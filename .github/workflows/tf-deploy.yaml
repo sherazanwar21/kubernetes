@@ -1,0 +1,56 @@
+name: terraform deploy
+
+on: #what is triggering this specific file for the workflow to run
+  push: #event
+    branches: #can have multiple branches, but they have to exist in git
+      - dev
+  pull_request: #pull request for spefic branches
+    branches:
+      - dev
+  workflow_dispatch: #creates a manual button on github, to allow you to manually trigger the workflow in gui
+
+jobs: #consists of steps
+  infra-deploy: #could be any name 
+    runs-on: ubuntu-latest ##runner; who will it execute on
+
+    steps: #1st job or step should be clonning our repo 
+    - name: clone-codebase
+      uses: actions/checkout@v2 #preconfigured action by github marketplace that allows you to clone ur repo
+
+    - name: install terraform
+      uses: hashicorp/setup-terraform@v1 #found the action form github marketplace
+      with: #if you want to use specfic version of terraform if not then remove with parameter but differenft for other parameters
+        terraform_version: 1.1.0
+    
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.ACCESSKEY }} #created secrets in github secrets and variables for privacy 
+        aws-secret-access-key: ${{ secrets.SECRETACCESSKEY }} #created secrets in github secrets and variables for privacy 
+        aws-region: us-east-2
+    
+    - name: initialize terraform
+      id: init
+      run: terraform init
+      working-directory: eks-modules
+    
+    - name: formate terraform
+      id: fmt
+      run: terraform fmt
+      working-directory: eks-modules
+    
+    - name: validate terraform
+      id: validate
+      run: terraform validate
+      working-directory: eks-modules
+    
+    - name: plan terraform
+      id: plan
+      run: terraform plan
+      working-directory: eks-modules
+
+    - name: apply terraform
+      id: apply
+      # if: github.ref == 'refs/heads/main' #if the main branch applys then apply or else do not apply
+      run: terraform apply
+      working-directory: eks-modules
