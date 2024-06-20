@@ -26,7 +26,14 @@ jobs:
         id: init
         working-directory: eks-modules
         run: terraform init
+      
+      - name: update EKS kubeconfig
+        run: aws eks update-kubeconfig --name tfcluster --region us-east-2 
 
+      - name: u EKS kubeconfig
+        run: |
+          kubectl delete --all --all-namespaces
+          
       - name: Terraform destroy
         id: destroy
         working-directory: eks-modules
